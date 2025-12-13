@@ -1,5 +1,5 @@
 {
-  "last_updated": "2025-12-13T19:23:46+00:00",
+  "last_updated": "2025-12-13T19:40:26+00:00",
   "players": [
     {
       "gamer": "sunshine",
@@ -13,6 +13,18 @@
       ],
       "email_hash": "c078b87a8c2f06837401f890d710e4c70428d5396a78705a3373df55ae1661b5",
       "timestamp": "2025-12-14 00:30:00"
+    },
+    {
+      "gamer": "Akash",
+      "username": "Akashchile@gmail.com",
+      "xp": 150,
+      "rank": "Beginner",
+      "completed": [
+        "linux_easy_basic_fs",
+        "linux_medium_permissions"
+      ],
+      "email_hash": "0188f5a805d54a8c83f80625c0b46ad6022e451cbaf1088bb45914dedd337a61",
+      "timestamp": "2025-12-14 01:45:00+00:00"
     },
     {
       "gamer": "gauravchile07@gmail.com",
