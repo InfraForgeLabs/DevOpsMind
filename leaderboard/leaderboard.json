@@ -1,6 +1,20 @@
 {
-  "last_updated": "2025-12-13T21:07:28+00:00",
+  "last_updated": "2025-12-13T21:40:17+00:00",
   "players": [
+    {
+      "gamer": "sunshine",
+      "username": "sunshine",
+      "xp": 848,
+      "rank": "Beginner",
+      "completed": [
+        "bash_easy_echo",
+        "docker_easy_basic_dockerfile",
+        "docker_medium_copy_run",
+        "terraform_hard_ec2_vars_outputs"
+      ],
+      "email_hash": "c078b87a8c2f06837401f890d710e4c70428d5396a78705a3373df55ae1661b5",
+      "timestamp": "2025-12-14 03:10:01"
+    },
     {
       "gamer": "cyberwolf",
       "username": "gaurav",
@@ -14,7 +28,7 @@
         "observability_hard_alert_eval"
       ],
       "email_hash": "f665818fe251fc477fce9c3601946d4778aed6324b4fb9a6765c7243f90cf040",
-      "timestamp": "2025-12-14 02:37:15"
+      "timestamp": "2025-12-14 03:06:25"
     }
   ]
 }
