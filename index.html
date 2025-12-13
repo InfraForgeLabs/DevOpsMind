@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>DevOpsMind Leaderboard</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #0d1117;
+      color: #c9d1d9;
+      text-align: center;
+      padding: 40px;
+    }
+    table {
+      margin: 20px auto;
+      border-collapse: collapse;
+      width: 60%;
+    }
+    th, td {
+      border: 1px solid #30363d;
+      padding: 8px 12px;
+    }
+    th {
+      background-color: #161b22;
+    }
+  </style>
+</head>
+<body>
+  <h2>🏆 DevOpsMind Leaderboard</h2>
+  <table id="board">
+    <thead><tr><th>Name</th><th>Score</th></tr></thead>
+    <tbody></tbody>
+  </table>
+
+  <script>
+    fetch('./leaderboard/leaderboard.json')
+      .then(res => res.json())
+      .then(data => {
+        const tbody = document.querySelector('#board tbody');
+        data.leaderboard.forEach(entry => {
+          const row = document.createElement('tr');
+          row.innerHTML = `<td>${entry.name}</td><td>${entry.score}</td>`;
+          tbody.appendChild(row);
+        });
+      })
+      .catch(() => {
+        document.body.innerHTML += '<p style="color:red;">Failed to load leaderboard.json</p>';
+      });
+  </script>
+</body>
+</html>
