@@ -1,17 +1,18 @@
 {
-  "last_updated": "2025-12-13T17:30:33+00:00",
+  "last_updated": "2025-12-13T17:37:28+00:00",
   "players": [
     {
       "gamer": "sunshine",
       "username": "sunshine",
-      "xp": 150,
+      "xp": 350,
       "rank": "Beginner",
       "completed": [
-        "docker_medium_copy_run",
-        "bash_easy_echo"
+        "bash_easy_echo",
+        "docker_easy_basic_dockerfile",
+        "docker_medium_copy_run"
       ],
       "email_hash": "c078b87a8c2f06837401f890d710e4c70428d5396a78705a3373df55ae1661b5",
-      "timestamp": "2025-12-13 21:43:18"
+      "timestamp": "2025-12-13 23:05:01"
     },
     {
       "gamer": "gauravchile07@gmail.com",
