@@ -1,4 +1,20 @@
 {
-  "last_updated": "1970-01-01T00:00:00+00:00",
-  "players": []
+  "last_updated": "2025-12-13T21:07:28+00:00",
+  "players": [
+    {
+      "gamer": "cyberwolf",
+      "username": "gaurav",
+      "xp": 500,
+      "rank": "Beginner",
+      "completed": [
+        "bash_medium_proc_count",
+        "git_easy_init_commit",
+        "git_hard_squash_merge",
+        "observability_easy_filter_errors",
+        "observability_hard_alert_eval"
+      ],
+      "email_hash": "f665818fe251fc477fce9c3601946d4778aed6324b4fb9a6765c7243f90cf040",
+      "timestamp": "2025-12-14 02:37:15"
+    }
+  ]
 }
