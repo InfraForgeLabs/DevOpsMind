@@ -1,0 +1,5 @@
+id: linux_medium_permissions
+title: "Fix File Permissions"
+difficulty: medium
+hint: "Ensure script.sh is executable only by the owner."
+validator: "validator.py"

@@ -1,0 +1,5 @@
+id: python_medium_readfile
+title: "File Reader CLI"
+difficulty: medium
+hint: "Create readfile.py; running `python3 readfile.py notes.txt` must print the file content."
+validator: "validator.py"

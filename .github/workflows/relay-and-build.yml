@@ -1,0 +1,167 @@
+name: Relay & Build Leaderboard
+
+on:
+  repository_dispatch:
+    types: [player_submission]   # ✅ Triggered by Cloudflare Worker
+  push:
+    branches:
+      - main
+      - leaderboard
+  workflow_dispatch:
+  schedule:
+    - cron: "*/1 * * * *"  # ⏱️ Run every minute for redundancy
+
+permissions:
+  contents: write
+
+jobs:
+  relay-and-build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # ---------------------------------------------------------
+      # 1️⃣ Checkout leaderboard branch
+      # ---------------------------------------------------------
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: leaderboard
+
+      # ---------------------------------------------------------
+      # 2️⃣ Save incoming submission (use gamer name if available)
+      # ---------------------------------------------------------
+      - name: Save incoming submission (use gamer name)
+        if: ${{ github.event_name == 'repository_dispatch' && github.event.client_payload.yaml != '' }}
+        run: |
+          echo "📩 Received new player submission via repository_dispatch"
+          mkdir -p leaderboard/submissions
+
+          FILE_HASH=$(echo "${{ github.event.client_payload.sha256 || github.sha }}" | cut -c1-12)
+
+          # 🧠 Extract gamer name from YAML payload (fallback to GitHub actor)
+          PLAYER=$(echo "${{ github.event.client_payload.gamer || github.actor }}" | tr -d '@.' | tr '[:upper:]' '[:lower:]')
+
+          FILE="leaderboard/submissions/${PLAYER}_${FILE_HASH}.yaml"
+          PAYLOAD="${{ github.event.client_payload.yaml }}"
+
+          if [ -f "$FILE" ]; then
+            CURRENT_HASH=$(sha256sum "$FILE" | cut -d' ' -f1)
+            NEW_HASH=$(echo "$PAYLOAD" | sha256sum | cut -d' ' -f1)
+            if [ "$CURRENT_HASH" = "$NEW_HASH" ]; then
+              echo "⏭️ Identical submission already stored ($FILE), skipping write."
+              echo "NO_COMMIT_FLAG" > NO_COMMIT_FLAG
+              exit 0
+            fi
+          fi
+
+          echo "$PAYLOAD" > "$FILE"
+          echo "📝 Saved new submission to $FILE"
+
+      # ---------------------------------------------------------
+      # 3️⃣ Setup Python
+      # ---------------------------------------------------------
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      - name: Install dependencies
+        run: pip install pyyaml
+
+      # ---------------------------------------------------------
+      # 4️⃣ Build leaderboard.json (merge by email_hash)
+      # ---------------------------------------------------------
+      - name: Build leaderboard.json
+        run: |
+          echo "⚙️ Building leaderboard.json..."
+          python3 <<'PYCODE'
+          import yaml, json, glob, datetime, hashlib, filecmp, shutil
+          from pathlib import Path
+
+          root = Path("leaderboard")
+          subs_dir = root / "submissions"
+          subs_dir.mkdir(parents=True, exist_ok=True)
+          root.mkdir(exist_ok=True)
+
+          subs = sorted(glob.glob(str(subs_dir / "*.yaml")) + glob.glob(str(subs_dir / "*.json")))
+          print(f"📂 Found {len(subs)} submissions")
+
+          data = []
+          for f in subs:
+              try:
+                  if f.endswith(".yaml"):
+                      d = yaml.safe_load(open(f))
+                  else:
+                      d = json.load(open(f))
+                  if not d:
+                      continue
+
+                  ts = str(d.get("timestamp", datetime.datetime.now(datetime.UTC).isoformat()))
+                  gamer = d.get("gamer") or d.get("player") or "unknown"
+                  xp = int(d.get("xp", d.get("score", 0)))
+                  rank = d.get("rank", "Beginner")
+                  completed = d.get("completed", [])
+                  email = str(d.get("email", "")).strip().lower()
+                  email_hash = hashlib.sha256(email.encode()).hexdigest() if email else None
+
+                  data.append({
+                      "gamer": gamer,
+                      "xp": xp,
+                      "rank": rank,
+                      "completed": completed,
+                      "email_hash": email_hash,
+                      "timestamp": ts,
+                  })
+              except Exception as e:
+                  print("⚠️ Skipping", f, e)
+
+          # ✅ Merge by email_hash (fallback to gamer)
+          final = {}
+          for e in data:
+              key = e.get("email_hash") or e["gamer"]
+              if key not in final or e["timestamp"] > final[key]["timestamp"]:
+                  final[key] = e
+
+          leaderboard = sorted(final.values(), key=lambda x: x["xp"], reverse=True)
+          output = {
+              "last_updated": datetime.datetime.now(datetime.UTC).replace(microsecond=0).isoformat(),
+              "players": leaderboard,
+          }
+
+          temp_file = root / "leaderboard.new.json"
+          final_file = root / "leaderboard.json"
+          json.dump(output, open(temp_file, "w"), indent=2)
+
+          # Compare old vs new — skip if identical
+          if final_file.exists() and filecmp.cmp(temp_file, final_file, shallow=False):
+              print("✅ No leaderboard changes detected — skipping commit.")
+              temp_file.unlink()
+              open("NO_COMMIT_FLAG", "w").write("1")
+          else:
+              shutil.move(temp_file, final_file)
+              print(f"✅ Leaderboard built with {len(leaderboard)} players.")
+          PYCODE
+
+      # ---------------------------------------------------------
+      # 5️⃣ Commit and Push Leaderboard
+      # ---------------------------------------------------------
+      - name: Commit and Push Leaderboard
+        run: |
+          if [ -f NO_COMMIT_FLAG ]; then
+            echo "⏭️ No new data — skipping push."
+            exit 0
+          fi
+
+          git config user.name 'github-actions[bot]'
+          git config user.email 'github-actions[bot]@users.noreply.github.com'
+
+          echo "📡 Syncing latest leaderboard branch..."
+          git fetch origin leaderboard
+          git pull origin leaderboard --rebase || true
+
+          git add leaderboard/leaderboard.json leaderboard/submissions || true
+          git commit -m "🔄 Auto-build leaderboard.json" || echo "No changes to commit"
+
+          echo "🚀 Pushing updated leaderboard.json..."
+          git push origin HEAD:leaderboard || echo "⚠️ Push skipped or up to date"

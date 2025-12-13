@@ -1,0 +1,5 @@
+id: helm_hard_configmap_integrate
+title: "Deployment must mount ConfigMap created via template"
+difficulty: hard
+hint: "Create configmap.yaml template using {{ .Values.config }} and mount it in Deployment via volume+volumeMounts."
+validator: "validator.py"

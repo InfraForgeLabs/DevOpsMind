@@ -1,0 +1,5 @@
+id: ansible_hard_user_dir
+title: "Create user and ensure directory exists (idempotent)"
+difficulty: hard
+hint: "Use Ansible modules: user + file. Ensure user=deploy and /opt/deploy exists as a directory."
+validator: "validator.py"

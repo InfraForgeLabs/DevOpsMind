@@ -1,0 +1,5 @@
+id: docker_hard_multistage
+title: "Build optimized image with multi-stage build"
+difficulty: hard
+hint: "Use multi-stage build: stage1 compiles requirements; stage2 copies only needed files and runs python app.py."
+validator: "validator.py"

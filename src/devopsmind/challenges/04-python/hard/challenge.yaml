@@ -1,0 +1,5 @@
+id: python_hard_unit_test
+title: "Implement function that passes the unit test"
+difficulty: hard
+hint: "Create utils.py with multiply(a, b). Tests in test_utils.py must pass when running pytest."
+validator: "validator.py"

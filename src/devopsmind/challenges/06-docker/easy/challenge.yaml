@@ -1,0 +1,5 @@
+id: docker_easy_basic_dockerfile
+title: "Create a basic Dockerfile"
+difficulty: easy
+hint: "Write a Dockerfile using python:3.10-slim and print 'Hello Docker' on container start."
+validator: "validator.py"

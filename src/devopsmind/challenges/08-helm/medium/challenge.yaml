@@ -1,0 +1,5 @@
+id: helm_medium_values_template
+title: "Template must use values.yaml variables"
+difficulty: medium
+hint: "Use {{ .Values.image }} in deployment.yaml; values.yaml must define image: nginx:alpine"
+validator: "validator.py"

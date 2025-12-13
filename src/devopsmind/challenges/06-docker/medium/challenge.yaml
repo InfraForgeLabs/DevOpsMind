@@ -1,0 +1,5 @@
+id: docker_medium_copy_run
+title: "Dockerfile that copies a local script and runs it"
+difficulty: medium
+hint: "Dockerfile must COPY app.py and set CMD to run python3 app.py."
+validator: "validator.py"

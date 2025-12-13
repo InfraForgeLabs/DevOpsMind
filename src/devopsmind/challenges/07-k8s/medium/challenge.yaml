@@ -1,0 +1,5 @@
+id: k8s_medium_deployment
+title: "Create a Deployment with 3 replicas"
+difficulty: medium
+hint: "deployment.yaml must define a Deployment named web-deploy with 3 replicas running nginx:1.21."
+validator: "validator.py"

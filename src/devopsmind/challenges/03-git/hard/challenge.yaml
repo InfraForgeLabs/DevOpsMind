@@ -1,0 +1,5 @@
+id: git_hard_squash_merge
+title: "Squash-merge a feature branch cleanly into main"
+difficulty: hard
+hint: "Squash the feature branch into main with a single commit message containing 'Add auth feature' and ensure no merge commits on main."
+validator: "validator.py"

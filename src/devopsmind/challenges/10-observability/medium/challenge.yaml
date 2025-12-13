@@ -1,0 +1,5 @@
+id: observability_medium_avg_latency
+title: "Compute average latency from metrics"
+difficulty: medium
+hint: "Write script metrics.py that reads metrics.txt and prints only the average latency value."
+validator: "validator.py"

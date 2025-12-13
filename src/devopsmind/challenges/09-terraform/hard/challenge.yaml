@@ -1,0 +1,5 @@
+id: terraform_hard_ec2_vars_outputs
+title: "EC2 resource using variables and output"
+difficulty: hard
+hint: "Use variables for instance_type and ami; create aws_instance 'dev' and output its id."
+validator: "validator.py"

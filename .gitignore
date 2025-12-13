@@ -1,0 +1,17 @@
+# Build artifacts
+build/
+dist/
+*.egg-info/
+
+# IDE
+.vscode/
+.idea/
+__pycache__/
+
+# Pip build leftovers
+devopsmind.py
+
+# OS files
+.DS_Store
+.buildenv
+*.key

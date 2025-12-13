@@ -1,0 +1,5 @@
+id: helm_easy_basic_chart
+title: "Create a basic Helm chart structure"
+difficulty: easy
+hint: "Create a folder 'mychart' with Chart.yaml and templates/deployment.yaml."
+validator: "validator.py"
