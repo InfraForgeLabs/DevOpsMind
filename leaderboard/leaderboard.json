@@ -1,5 +1,5 @@
 {
-  "last_updated": "2025-12-13T17:21:02+00:00",
+  "last_updated": "2025-12-13T17:25:11+00:00",
   "players": [
     {
       "gamer": "sunshine",
@@ -7,8 +7,8 @@
       "xp": 150,
       "rank": "Beginner",
       "completed": [
-        "docker_medium_copy_run",
-        "bash_easy_echo"
+        "bash_easy_echo",
+        "docker_medium_copy_run"
       ],
       "email_hash": "c078b87a8c2f06837401f890d710e4c70428d5396a78705a3373df55ae1661b5",
       "timestamp": "2025-12-13 21:43:18"
@@ -19,8 +19,8 @@
       "xp": 100,
       "rank": "Beginner",
       "completed": [
-        "linux_easy_basic_fs",
-        "bash_easy_echo"
+        "bash_easy_echo",
+        "linux_easy_basic_fs"
       ],
       "email_hash": "4bb8fbd53abc421747b67744555a8052e9a0e17bba0caee259993b0acf493d62",
       "timestamp": "2025-12-13 15:09:06"
