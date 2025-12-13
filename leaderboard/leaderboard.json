@@ -1,5 +1,5 @@
 {
-  "last_updated": "2025-12-13T19:20:53+00:00",
+  "last_updated": "2025-12-13T19:22:41+00:00",
   "players": [
     {
       "gamer": "sunshine",
@@ -20,8 +20,8 @@
       "xp": 100,
       "rank": "Beginner",
       "completed": [
-        "linux_easy_basic_fs",
-        "bash_easy_echo"
+        "bash_easy_echo",
+        "linux_easy_basic_fs"
       ],
       "email_hash": "4bb8fbd53abc421747b67744555a8052e9a0e17bba0caee259993b0acf493d62",
       "timestamp": "2025-12-13 15:09:06"
