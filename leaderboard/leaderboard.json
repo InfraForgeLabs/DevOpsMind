@@ -1,0 +1,46 @@
+{
+  "last_updated": "2025-12-13T15:38:35+00:00",
+  "players": [
+    {
+      "gamer": "sky",
+      "xp": 150,
+      "rank": "Beginner",
+      "completed": [
+        "terraform_hard_ec2_vars_outputs"
+      ],
+      "email_hash": "10c6dda321705689caf7fa32c7edf45c665258159fc2af7d9a53c850f0aaa609",
+      "timestamp": "2025-12-13 09:27:12"
+    },
+    {
+      "gamer": "rj",
+      "xp": 150,
+      "rank": "Beginner",
+      "completed": [
+        "observability_easy_filter_errors"
+      ],
+      "email_hash": "25e597adacfd9a08c3a143ac0f8832662028526c1dcc9ec1f48539702883c487",
+      "timestamp": "2025-12-13 07:51:01.921000+00:00"
+    },
+    {
+      "gamer": "gauravchile07@gmail.com",
+      "xp": 100,
+      "rank": "Beginner",
+      "completed": [
+        "linux_easy_basic_fs",
+        "bash_easy_echo"
+      ],
+      "email_hash": "4bb8fbd53abc421747b67744555a8052e9a0e17bba0caee259993b0acf493d62",
+      "timestamp": "2025-12-13 15:09:06"
+    },
+    {
+      "gamer": "sunshine",
+      "xp": 50,
+      "rank": "Beginner",
+      "completed": [
+        "bash_easy_echo"
+      ],
+      "email_hash": "c078b87a8c2f06837401f890d710e4c70428d5396a78705a3373df55ae1661b5",
+      "timestamp": "2025-12-13 21:00:55"
+    }
+  ]
+}
