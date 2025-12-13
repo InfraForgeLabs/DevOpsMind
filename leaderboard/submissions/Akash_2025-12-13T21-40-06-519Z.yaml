@@ -1,0 +1,11 @@
+gamer: sunshine
+username: gauravchile02@gmail.com
+xp: 850
+rank: Explorer
+completed:
+- bash_easy_echo
+- docker_easy_basic_dockerfile
+- docker_medium_copy_run
+- terraform_hard_ec2_vars_outputs
+email: gauravchile02@gmail.com
+timestamp: '2025-12-13T21:40:01+00:00'
