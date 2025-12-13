@@ -1,0 +1,5 @@
+id: bash_easy_echo
+title: "Simple Echo Script"
+difficulty: easy
+hint: "Create echo_hello.sh that prints exactly: Hello DevOpsMind"
+validator: "validator.py"

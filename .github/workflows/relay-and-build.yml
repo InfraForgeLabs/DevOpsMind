@@ -1,0 +1,169 @@
+name: Relay & Build Leaderboard
+
+on:
+  repository_dispatch:
+    types: [player_submission]
+  push:
+    branches: [leaderboard]
+    paths:
+      - 'leaderboard/**'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  relay-and-build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🧭 Checkout leaderboard branch
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: leaderboard
+
+      - name: 🐍 Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      - name: 📦 Install dependencies
+        run: pip install pyyaml
+
+      - name: ⚙️ Build leaderboard.json
+        run: |
+          echo "🏗️ Building leaderboard.json..."
+          python3 <<'PYCODE'
+          import yaml, json, glob, datetime, hashlib, filecmp, shutil, os
+          from pathlib import Path
+
+          # 🧮 XP → Rank mapping
+          def compute_rank(xp: int) -> str:
+              if xp < 1000: return "Beginner"
+              elif xp < 5000: return "Apprentice"
+              elif xp < 10000: return "Operator"
+              elif xp < 20000: return "Engineer"
+              elif xp < 35000: return "Specialist"
+              elif xp < 55000: return "Advanced"
+              elif xp < 80000: return "Expert"
+              elif xp < 120000: return "Master"
+              elif xp < 180000: return "Architect"
+              elif xp < 260000: return "Grandmaster"
+              elif xp < 370000: return "Legend"
+              elif xp < 520000: return "Mythic"
+              elif xp < 750000: return "Eternal"
+              elif xp < 1000000: return "Ascendant"
+              elif xp < 1500000: return "Vanguard"
+              elif xp < 2000000: return "Paragon"
+              elif xp < 3000000: return "Virtuoso"
+              elif xp < 5000000: return "Transcendent"
+              elif xp < 10000000: return "Celestial"
+              else: return "Infinite"
+
+          root = Path("leaderboard")
+          subs_dir = root / "submissions"
+          subs_dir.mkdir(parents=True, exist_ok=True)
+
+          # 🧹 Clean old (>7 days) YAML submissions
+          now = datetime.datetime.now(datetime.UTC)
+          for f in subs_dir.glob("*.yaml"):
+              if (now - datetime.datetime.fromtimestamp(f.stat().st_mtime, datetime.UTC)).days > 7:
+                  print(f"🧹 Removing stale file: {f.name}")
+                  f.unlink(missing_ok=True)
+
+          subs = sorted(glob.glob(str(subs_dir / "*.yaml")) + glob.glob(str(subs_dir / "*.json")))
+          print(f"📂 Found {len(subs)} submissions after cleanup")
+
+          data = []
+          for f in subs:
+              try:
+                  d = yaml.safe_load(open(f)) if f.endswith(".yaml") else json.load(open(f))
+                  if not d:
+                      continue
+                  email = str(d.get("email", "")).strip().lower()
+                  if not email:
+                      print(f"⚠️ Skipping {f} — missing email.")
+                      continue
+                  email_hash = hashlib.sha256(email.encode()).hexdigest()
+                  gamer = d.get("gamer") or d.get("player") or "unknown"
+                  username = d.get("username") or d.get("name") or d.get("email") or gamer
+                  completed = sorted(set(d.get("completed", [])))
+                  xp = int(d.get("xp", 0))
+                  ts = str(d.get("timestamp", datetime.datetime.now(datetime.UTC).isoformat()))
+
+                  data.append({
+                      "gamer": gamer,
+                      "username": username,
+                      "xp": xp,
+                      "completed": completed,
+                      "email_hash": email_hash,
+                      "timestamp": ts,
+                  })
+              except Exception as e:
+                  print("⚠️ Skipping", f, e)
+
+          # 🧩 Merge by email_hash (idempotent XP)
+          merged = {}
+          for e in data:
+              key = e["email_hash"]
+              if key not in merged:
+                  merged[key] = {
+                      "gamer": e["gamer"],
+                      "username": e["username"],
+                      "xp": 0,
+                      "rank": "Beginner",
+                      "completed": [],
+                      "email_hash": key,
+                      "timestamp": e["timestamp"],
+                  }
+
+              old = merged[key]
+              old_completed = set(old.get("completed", []))
+              new_completed = set(e.get("completed", []))
+              new_challenges = new_completed - old_completed
+
+              # ✅ Only add XP for newly seen challenges
+              if new_challenges:
+                  total_xp = e.get("xp", 0)
+                  per_challenge = total_xp // max(len(new_completed), 1)
+                  gained = per_challenge * len(new_challenges)
+                  old["xp"] += gained
+                  old["completed"] = sorted(old_completed | new_completed)
+                  old["rank"] = compute_rank(old["xp"])
+
+              # 🕒 Keep latest timestamp & identity
+              if e["timestamp"] > old["timestamp"]:
+                  old["timestamp"] = e["timestamp"]
+                  old["username"] = e["username"]
+                  old["gamer"] = e["gamer"]
+
+          leaderboard = sorted(merged.values(), key=lambda x: (-x["xp"], x["username"]))
+          output = {
+              "last_updated": datetime.datetime.now(datetime.UTC).replace(microsecond=0).isoformat(),
+              "players": leaderboard,
+          }
+
+          temp_file = root / "leaderboard.new.json"
+          final_file = root / "leaderboard.json"
+          json.dump(output, open(temp_file, "w"), indent=2)
+
+          if final_file.exists() and filecmp.cmp(temp_file, final_file, shallow=False):
+              print("✅ No leaderboard changes detected — skipping commit.")
+              temp_file.unlink()
+              open("NO_COMMIT_FLAG", "w").write("1")
+          else:
+              shutil.move(temp_file, final_file)
+              print(f"✅ Leaderboard built with {len(leaderboard)} players.")
+          PYCODE
+
+      - name: 🚀 Commit & Push updates
+        run: |
+          if [ -f NO_COMMIT_FLAG ]; then
+            echo "⏭️ No new data — skipping push."
+            exit 0
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email 'github-actions[bot]@users.noreply.github.com'
+          git add leaderboard/leaderboard.json leaderboard/submissions || true
+          git commit -m "🔄 Auto-build leaderboard.json" || echo "No changes to commit"
+          git push origin HEAD:leaderboard || echo "⚠️ Push skipped or up to date"

@@ -1,0 +1,5 @@
+id: git_medium_feature_rebase
+title: "Feature branch and rebase"
+difficulty: medium
+hint: "Create branch feature/login, add login.txt with 'login implemented', rebase feature/login onto main so the feature commit is on top and not a merge commit."
+validator: "validator.py"

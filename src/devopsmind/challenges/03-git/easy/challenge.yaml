@@ -1,0 +1,5 @@
+id: git_easy_init_commit
+title: "Initialize repository and commit README"
+difficulty: easy
+hint: "Create a git repo, add README.md containing 'DevOpsMind Git', and make an initial commit with message: Initial commit"
+validator: "validator.py"

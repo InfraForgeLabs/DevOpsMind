@@ -1,0 +1,5 @@
+id: ansible_medium_pkg_file
+title: "Install package & create file"
+difficulty: medium
+hint: "playbook.yml must install 'tree' AND create /tmp/info.txt with content 'Ansible Works'."
+validator: "validator.py"

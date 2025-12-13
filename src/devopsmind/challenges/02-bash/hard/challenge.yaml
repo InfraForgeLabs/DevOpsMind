@@ -1,0 +1,5 @@
+id: bash_hard_dir_backup
+title: "Directory Backup Script"
+difficulty: hard
+hint: "backup.sh should create a compressed tar archive backup.tar.gz of the directory named 'data' in CWD."
+validator: "validator.py"

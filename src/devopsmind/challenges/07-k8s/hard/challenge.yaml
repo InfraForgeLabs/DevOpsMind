@@ -1,0 +1,5 @@
+id: k8s_hard_service_deploy
+title: "Expose Deployment with a Service"
+difficulty: hard
+hint: "Create deployment.yaml (web-deploy, label app=web) and service.yaml (ClusterIP exposing port 80 targeting app=web)."
+validator: "validator.py"

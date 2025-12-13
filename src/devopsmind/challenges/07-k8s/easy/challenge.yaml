@@ -1,0 +1,5 @@
+id: k8s_easy_basic_pod
+title: "Create a basic Pod"
+difficulty: easy
+hint: "Write pod.yaml defining a Pod named hello-pod running nginx."
+validator: "validator.py"

@@ -1,0 +1,5 @@
+id: terraform_medium_s3_bucket
+title: "Create an aws_s3_bucket resource"
+difficulty: medium
+hint: "main.tf must define resource aws_s3_bucket 'devops_bucket' with bucket = 'devopsmind-bucket'."
+validator: "validator.py"

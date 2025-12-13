@@ -1,0 +1,5 @@
+id: ansible_easy_basic_playbook
+title: "Basic Ansible Playbook"
+difficulty: easy
+hint: "Create playbook.yml with one task printing 'Hello Ansible' using debug module."
+validator: "validator.py"

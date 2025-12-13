@@ -1,0 +1,5 @@
+id: observability_hard_alert_eval
+title: "Evaluate alert condition from metric file"
+difficulty: hard
+hint: "Write alert.py that reads cpu.txt and prints ALERT if cpu > 80 else OK."
+validator: "validator.py"

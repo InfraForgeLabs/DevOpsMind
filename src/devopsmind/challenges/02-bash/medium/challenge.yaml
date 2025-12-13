@@ -1,0 +1,5 @@
+id: bash_medium_proc_count
+title: "Count Running Processes"
+difficulty: medium
+hint: "count_procs.sh should print only the number of running processes (numeric output)."
+validator: "validator.py"

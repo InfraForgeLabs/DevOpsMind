@@ -1,0 +1,5 @@
+id: python_easy_add_function
+title: "Implement add(a, b)"
+difficulty: easy
+hint: "Create a file calc.py defining add(a, b) that returns a + b."
+validator: "validator.py"

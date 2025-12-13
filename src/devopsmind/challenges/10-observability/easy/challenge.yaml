@@ -1,0 +1,5 @@
+id: observability_easy_filter_errors
+title: "Filter ERROR logs"
+difficulty: easy
+hint: "Create errors.log containing only lines from app.log that include the word 'ERROR'."
+validator: "validator.py"

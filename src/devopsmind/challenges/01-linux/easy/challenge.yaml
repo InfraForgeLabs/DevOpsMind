@@ -1,0 +1,5 @@
+id: linux_easy_basic_fs
+title: "Basic Filesystem Task"
+difficulty: easy
+hint: "Create dir 'project' and inside it a file named notes.txt containing 'DevOpsMind'."
+validator: "validator.py"

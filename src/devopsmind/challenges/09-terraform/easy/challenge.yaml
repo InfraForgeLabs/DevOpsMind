@@ -1,0 +1,5 @@
+id: terraform_easy_basic
+title: "Create main.tf with a provider block"
+difficulty: easy
+hint: "main.tf must define provider 'aws' with region = \"us-east-1\"."
+validator: "validator.py"
