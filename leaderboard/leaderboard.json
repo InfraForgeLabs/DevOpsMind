@@ -1,42 +1,4 @@
 {
-  "last_updated": "2025-12-13T19:40:26+00:00",
-  "players": [
-    {
-      "gamer": "sunshine",
-      "username": "sunshine#1234",
-      "xp": 500,
-      "rank": "Beginner",
-      "completed": [
-        "bash_easy_echo",
-        "docker_easy_basic_dockerfile",
-        "docker_medium_copy_run"
-      ],
-      "email_hash": "c078b87a8c2f06837401f890d710e4c70428d5396a78705a3373df55ae1661b5",
-      "timestamp": "2025-12-14 00:30:00"
-    },
-    {
-      "gamer": "Akash",
-      "username": "Akashchile@gmail.com",
-      "xp": 150,
-      "rank": "Beginner",
-      "completed": [
-        "linux_easy_basic_fs",
-        "linux_medium_permissions"
-      ],
-      "email_hash": "0188f5a805d54a8c83f80625c0b46ad6022e451cbaf1088bb45914dedd337a61",
-      "timestamp": "2025-12-14 01:45:00+00:00"
-    },
-    {
-      "gamer": "gauravchile07@gmail.com",
-      "username": "gauravchile07@gmail.com",
-      "xp": 100,
-      "rank": "Beginner",
-      "completed": [
-        "linux_easy_basic_fs",
-        "bash_easy_echo"
-      ],
-      "email_hash": "4bb8fbd53abc421747b67744555a8052e9a0e17bba0caee259993b0acf493d62",
-      "timestamp": "2025-12-13 15:09:06"
-    }
-  ]
+  "last_updated": "1970-01-01T00:00:00+00:00",
+  "players": []
 }
